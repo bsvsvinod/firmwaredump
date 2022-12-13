@@ -1,0 +1,27 @@
+unzip DCS-932L_REVA_FIRMWARE_1.14.04.ZIP
+
+head dcs932l_v1.14.04.bin
+
+strings -10 dcs932l_v1.14.04.bin|head
+
+binwalk dcs932l_v1.14.04.bin
+
+dd if=dcs932l_v1.14.04.bin skip=327744 bs=1 of=kernel.lzma
+
+unlzma kernel.lzma
+
+file kernel
+
+binwalk kernel
+
+dd if=kernel skip=4038656 bs=1 of=mystery.lzma
+
+unlzma mystery.lzma
+
+file mystery
+
+mkdir cpio; cd cpio
+
+cpio -idm --no-absolute-filenames < ../mystery
+
+You are there
